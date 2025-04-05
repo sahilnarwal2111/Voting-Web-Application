@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import api from '../utils/api';
+import api, { setAuthToken } from '../utils/api';
 
 export const AuthContext = createContext();
 
@@ -12,8 +12,11 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // If there's a token, set the auth header and fetch user data
     if (token) {
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      // api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       loadUser();
+      console.log("Token present in context:", token);
+
+      setAuthToken(token);
     } else {
       setIsLoading(false);
     }
@@ -30,6 +33,7 @@ export const AuthProvider = ({ children }) => {
       console.error('Error loading user:', err);
       // Clear token on error
       localStorage.removeItem('token');
+      setAuthToken(null);
       setToken(null);
       setCurrentUser(null);
       setIsAuthenticated(false);
@@ -44,8 +48,9 @@ export const AuthProvider = ({ children }) => {
       const res = await api.post('/api/auth/register', userData);
       
       // Set token in local storage
-      localStorage.setItem('token', res.data.token);
+      // localStorage.setItem('token', res.data.token);
       setToken(res.data.token);
+      setAuthToken(res.data.token);
       
       // Load user data
       await loadUser();
@@ -62,8 +67,9 @@ export const AuthProvider = ({ children }) => {
       const res = await api.post('/api/auth/login', userData);
       
       // Set token in local storage
-      localStorage.setItem('token', res.data.token);
+      // localStorage.setItem('token', res.data.token);
       setToken(res.data.token);
+      setAuthToken(res.data.token);
       
       // Load user data
       await loadUser();
@@ -83,7 +89,8 @@ export const AuthProvider = ({ children }) => {
     }
     
     // Clear token and user data
-    localStorage.removeItem('token');
+    // localStorage.removeItem('token');
+    setAuthToken(null);
     setToken(null);
     setCurrentUser(null);
     setIsAuthenticated(false);

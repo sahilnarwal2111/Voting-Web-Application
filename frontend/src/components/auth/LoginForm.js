@@ -13,9 +13,12 @@ const LoginForm = () => {
     setError('');
 
     try {
-      const response = await axios.post('/api/auth/login', { email, password });
+      const response = await axios.post(`/api/auth/login`, { email, password });
+      // const response = await axios.post(`http://localhost:8080/api/auth/login`, { email, password });
       // Assuming the API returns a token
       localStorage.setItem('token', response.data.token);
+      console.log("Successful Login !")
+      console.log(response)
       navigate('/dashboard'); // Redirect to dashboard after successful login
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed. Please try again.');
