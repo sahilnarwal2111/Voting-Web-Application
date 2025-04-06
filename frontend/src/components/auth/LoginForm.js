@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const LoginForm = () => {
+  const { login } = useContext(AuthContext); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -13,13 +15,18 @@ const LoginForm = () => {
     setError('');
 
     try {
-      const response = await axios.post(`/api/auth/login`, { email, password });
-      // const response = await axios.post(`http://localhost:8080/api/auth/login`, { email, password });
-      // Assuming the API returns a token
-      localStorage.setItem('token', response.data.token);
-      console.log("Successful Login !")
-      console.log(response)
-      navigate('/dashboard'); // Redirect to dashboard after successful login
+      // const response = await axios.post(`/api/auth/login`, { email, password });
+      // // const response = await axios.post(`http://localhost:8080/api/auth/login`, { email, password });
+      // // Assuming the API returns a token
+      // localStorage.setItem('token', response.data.token);
+      // console.log("Successful Login !")
+      // console.log(response)
+      // navigate('/dashboard'); // Redirect to dashboard after successful login
+
+      await login({ email, password }); // 🔥 use context method
+      console.log("Successful Login!");
+      navigate('/dashboard');
+
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed. Please try again.');
     }

@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(res.data.data);
       setIsAuthenticated(true);
       setIsLoading(false);
+      console.log("Here")
     } catch (err) {
       console.error('Error loading user:', err);
       // Clear token on error
@@ -64,18 +65,22 @@ export const AuthProvider = ({ children }) => {
   // Login user
   const login = async (userData) => {
     try {
+      setIsLoading(true); // 🔑 show loader while loading user
       const res = await api.post('/api/auth/login', userData);
       
       // Set token in local storage
-      // localStorage.setItem('token', res.data.token);
+      localStorage.setItem('token', res.data.token);
       setToken(res.data.token);
       setAuthToken(res.data.token);
-      
+      console.log("Here")
       // Load user data
       await loadUser();
       
+      
       return res.data;
     } catch (err) {
+      setIsAuthenticated(false);
+      setIsLoading(false);
       throw err.response.data;
     }
   };

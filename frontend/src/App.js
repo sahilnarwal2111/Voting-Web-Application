@@ -47,7 +47,7 @@ function App() {
                 <Route path="/dashboard" element={
                   <PrivateRoute>
                     <Dashboard />
-                  </PrivateRoute>
+                   </PrivateRoute>
                 } />
                 <Route path="/admin" element={
                   <PrivateRoute>
