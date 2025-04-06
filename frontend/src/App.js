@@ -63,6 +63,13 @@ function App() {
                     </AdminRoute>
                   </PrivateRoute>
                 } />
+                
+                {/* <Route element={<PrivateRoute />}>
+                  <Route element={<AdminRoute />}>
+                    <Route path="/create-poll" element={<CreatePoll />} />
+                    
+                  </Route>
+                </Route> */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

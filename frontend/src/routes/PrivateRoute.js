@@ -13,7 +13,6 @@ const PrivateRoute = ({ children }) => {
 
   if (!isAuthenticated) {
     console.log('PrivateRoute: isAuthenticated =', isAuthenticated);
-
     // Redirect to login page but save the location they were trying to access
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
