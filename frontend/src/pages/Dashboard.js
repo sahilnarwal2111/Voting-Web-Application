@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const Dashboard = () => {
   const { polls, loading, error } = usePoll();
   const navigate = useNavigate();
-
+  console.log("Here inside Dashboard Component : ", polls)
   const handlePollClick = (pollId) => {
     navigate(`/polls/${pollId}`); // Navigate to the poll details or voting page
   };
@@ -23,7 +23,7 @@ const Dashboard = () => {
         <h2>Available Polls</h2>
         {polls.length > 0 ? (
           polls.map((poll) => (
-            <PollCard key={poll.id} poll={poll} onClick={handlePollClick} />
+            <PollCard key={poll._id} poll={poll} onClick={handlePollClick} />
           ))
         ) : (
           <p>No polls available at the moment.</p>

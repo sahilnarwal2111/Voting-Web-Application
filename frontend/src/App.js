@@ -44,6 +44,8 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/polls" element={<PollsList />} />
                 <Route path="/polls/:id" element={<PollDetail />} />
+                
+
                 <Route path="/dashboard" element={
                   <PrivateRoute>
                     <Dashboard />

@@ -84,7 +84,7 @@ exports.createPoll = async (req, res, next) => {
     }
 
     // Format options as objects with text property
-    req.body.options = req.body.options.map(option => ({ text: option }));
+    // req.body.options = req.body.options.map(option => ({ text: option }));
 
     const poll = await Poll.create(req.body);
 

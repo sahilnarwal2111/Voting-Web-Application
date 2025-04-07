@@ -11,7 +11,7 @@ const PollCard = ({ poll, onClick }) => {
   // };
 
   return (
-    <div className="poll-card" onClick={() => onClick(poll.id)}>
+    <div className="poll-card" onClick={() => onClick(poll._id)}>
       <h3 className="poll-title">{poll.title}</h3>
       <p className="poll-description">{poll.description}</p>
       <p className="poll-votes">Total Votes: {poll.totalVotes}</p>

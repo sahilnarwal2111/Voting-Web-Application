@@ -30,11 +30,17 @@ const VoteForm = ({ poll, onSubmit }) => {
                 type="radio"
                 id={`option-${index}`}
                 name="vote-option"
-                value={option}
-                checked={selectedOption === option}
-                onChange={(e) => setSelectedOption(e.target.value)}
+                // value={option}
+                // checked={selectedOption === option}
+                // onChange={(e) => setSelectedOption(e.target.value)}
+                value={option._id} // use the id or whatever uniquely identifies the option
+                checked={selectedOption === option._id}
+                onChange={() => setSelectedOption(option._id)}
+
               />
-              <label htmlFor={`option-${index}`}>{option}</label>
+              {/* <label htmlFor={`option-${index}`}>{option}</label> */}
+              <label htmlFor={`option-${index}`}>{option.text}</label>
+
             </div>
           ))}
         </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './PollForm.css'; // Assuming you have a CSS file for styling the poll form
 
 const PollForm = ({ onSubmit }) => {
+  const [endDate, setEndDate] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [options, setOptions] = useState(['', '']);
@@ -30,6 +31,10 @@ const PollForm = ({ onSubmit }) => {
       setError('Title and description are required.');
       return;
     }
+    if (!endDate) {
+      setError('End date is required.');
+      return;
+    }
 
     if (options.some((option) => !option.trim())) {
       setError('All options must be filled out.');
@@ -40,17 +45,30 @@ const PollForm = ({ onSubmit }) => {
       setError('At least two options are required.');
       return;
     }
+    const formattedEndDate = new Date(endDate).toISOString();
 
-    onSubmit({ title, description, options });
+    // onSubmit({ title, description, options });
+    onSubmit({ title, description, options, endDate: formattedEndDate });
     setTitle('');
     setDescription('');
     setOptions(['', '']);
+    setEndDate('');
   };
 
   return (
     <div className="poll-form-container">
       <h2>Create a New Poll</h2>
       <form onSubmit={handleSubmit}>
+      <div className="form-group">
+  <label htmlFor="endDate">End Date:</label>
+  <input
+    type="datetime-local"
+    id="endDate"
+    value={endDate}
+    onChange={(e) => setEndDate(e.target.value)}
+    required
+  />
+</div>  
         <div className="form-group">
           <label htmlFor="title">Title:</label>
           <input

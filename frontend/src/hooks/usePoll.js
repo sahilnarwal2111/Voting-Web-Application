@@ -8,11 +8,13 @@ const usePoll = () => {
 
   // Fetch all polls
   const fetchPolls = async () => {
+    console.log("Fetching Polls...")
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get('/api/polls');
-      setPolls(response.data);
+      const response = await axios.get('http://localhost:8080/api/polls');
+      setPolls(response.data.data);
+      console.log(response.data)
     } catch (err) {
       console.error('Failed to fetch polls:', err);
       setError(err.response?.data?.message || 'Failed to fetch polls.');
@@ -25,7 +27,26 @@ const usePoll = () => {
   const createPoll = async (pollData) => {
     setError(null);
     try {
-      const response = await axios.post('/api/polls', pollData);
+      const formattedData = {
+        ...pollData,
+        options: pollData.options.map(option => ({ text: option }))
+      };
+      // const response = await axios.post('http://localhost:8080/api/polls', pollData);
+      console.log('Sending Poll Data:', pollData);
+      const token = localStorage.getItem('token');
+      console.log('Auth Token:', token);
+
+      const response = await axios.post(
+        'http://localhost:8080/api/polls',
+        formattedData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+        }
+      );
+      
       setPolls((prevPolls) => [...prevPolls, response.data]);
     } catch (err) {
       console.error('Failed to create poll:', err);
