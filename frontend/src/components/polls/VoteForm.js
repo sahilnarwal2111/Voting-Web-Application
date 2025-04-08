@@ -14,7 +14,9 @@ const VoteForm = ({ poll, onSubmit }) => {
       return;
     }
 
-    onSubmit(selectedOption);
+    // onSubmit(selectedOption);
+    const selectedOptionObj = poll.options.find(option => option._id === selectedOption);
+  onSubmit(selectedOptionObj);
     setSelectedOption('');
   };
 
